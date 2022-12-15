@@ -31,3 +31,9 @@ services:
     
 volumes:
   db:
+
+  
+networks:
+  lab_default:
+    # Use a custom driver
+    driver: bridge
