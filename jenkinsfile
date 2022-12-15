@@ -10,10 +10,6 @@ pipeline {
                 '''
                 echo 'start container'
                 sh'''
-                docker build ./app/ -f ./app/Dockerfile -t app
-                '''   
-                echo 'start container'
-                sh'''
                 docker-compose up -d --no-color --wait
                 '''               
             }
