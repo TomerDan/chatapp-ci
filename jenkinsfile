@@ -6,8 +6,12 @@ pipeline {
             steps {
                 echo 'prune docker data'
                 sh'''
-                docker system prune -a --volumes -f
+                docker system prune -a --volume -f
                 '''
+                echo 'start container'
+                sh'''
+                docker build ./app/ -f ./app/Dockerfile -t app
+                '''   
                 echo 'start container'
                 sh'''
                 docker-compose up -d --no-color --wait
@@ -17,7 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh'curl app:8083'
+                sh'curl 
             }
         }
         stage('Deploy') {
