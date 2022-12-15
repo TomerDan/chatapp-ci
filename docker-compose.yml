@@ -34,6 +34,5 @@ volumes:
 
   
 networks:
-  lab_default:
-    # Use a custom driver
-    driver: bridge
+  default:
+    name: lab_default
