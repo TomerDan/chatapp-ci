@@ -1,7 +1,6 @@
 services:
   app:
     build: ./app
-    container_name: app
     ports:
       - "8083:8083"
     depends_on:
@@ -23,9 +22,6 @@ services:
       retries: 20
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-
-  
-      
     
 volumes:
   db:
