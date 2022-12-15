@@ -14,7 +14,7 @@ pipeline {
                 '''   
                 echo 'start container'
                 sh'''
-                docker-compose up -d --no-color --wait
+                docker-compose up -d
                 '''               
             }
         }
