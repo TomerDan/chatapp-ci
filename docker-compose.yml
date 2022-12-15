@@ -32,7 +32,7 @@ services:
 volumes:
   db:
 
-  
 networks:
   default:
-    name: lab_default
+    external:
+      name: lab_default
