@@ -21,7 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh'curl 
+                sh'curl app:8083'
             }
         }
         stage('Deploy') {
