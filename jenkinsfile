@@ -21,7 +21,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh'curl http://app:8083/'
+                sh'''
+                docker network connect lab_default app
+                curl http://app:8083/
+                '''
             }
         }
         stage('Deploy') {
