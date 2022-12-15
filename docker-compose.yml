@@ -34,5 +34,6 @@ volumes:
 
 networks:
   default:
-    external:
-      name: lab_default
+    name: lab_default
+    external: true
+      
