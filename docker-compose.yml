@@ -1,8 +1,7 @@
-version: "3"
+version: "2.1"
 services:
   app:
-    build: ./app
-    dockerfile: Dockerfile
+    image: app
     ports:
       - "8083:8083"
     depends_on:
@@ -24,9 +23,6 @@ services:
       retries: 20
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-
-  
-      
     
 volumes:
   db:
