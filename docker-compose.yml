@@ -32,8 +32,8 @@ services:
 volumes:
   db:
 
+  
 networks:
-  default:
-    name: lab_default
-    external: true
-      
+  lab_default:
+    # Use a custom driver
+    driver: bridge
