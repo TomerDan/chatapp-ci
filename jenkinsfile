@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'prune docker data'
                 sh'''
-                docker system prune -a --volume -f
+                docker system prune -a --volumes -f
                 '''
                 echo 'start container'
                 sh'''
