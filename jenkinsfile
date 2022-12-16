@@ -18,7 +18,6 @@ pipeline {
 //################################BUILD###########################################
         stage('Build') {
             steps {
-                echo 'Build....'
                 script{
                     gv = load "script.groovy"
                     gv.build()
