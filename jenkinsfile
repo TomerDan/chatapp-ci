@@ -5,7 +5,7 @@ pipeline {
     }
 //###############################VERSION###############################################3
     stages {
-        stage(version){
+        stage('version'){
             when {
                 branch "release/*"
             }
