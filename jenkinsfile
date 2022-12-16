@@ -1,41 +1,75 @@
 pipeline {
     agent any
-
     stages {
+################################BUILD###########################################
         stage('Build') {
             steps {
-                echo 'prune docker data'
-                sh'''
-                docker system prune -a --volumes -f
-                '''
-                echo 'start container'
-                sh'''
-                docker build ./app/ -f ./app/Dockerfile -t app
-                '''   
-                echo 'start container'
-                sh'''
-                docker-compose up -d
-                '''               
+                script{
+                    gv = load "script.groovy"
+                    gv.version(
+                    gv.build
+                    )
+                }             
             }
         }
+################################PACKAGE###########################################
+        stage('Package') {
+            when {
+                branch "main/*"
+            }
+            steps {
+                echo 'Package....'
+            }
+        }
+################################TEST###########################################
         stage('Test') {
+            when {
+                anyOf {
+                    branch "main"
+                    branch "release/*"
+                }
+            }
             steps {
-                echo 'Testing..'
-                sh'''
-                docker network connect lab_default app
-                curl http://app:8083/
-                '''
+                script{
+                    gv.test()
+                }
+
             }
         }
+################################TAG###########################################
+        stage('Tag') {
+            when {
+                branch "main/*"
+            }
+            steps {
+                echo 'Tag....'
+            }
+        }
+################################PUBLISH###########################################
+        stage('Publish') {
+            when {
+                branch "main/*"
+            }
+            steps {
+                echo 'Publish....'
+            }
+        }
+################################DEPLOY###########################################
         stage('Deploy') {
+            when {
+                branch "main/*"
+            }
             steps {
-                echo 'Deploying....'
+                echo 'Deploy....'
             }
         }
+################################CLEAN###########################################
     }
     post{
         always{
-            sh 'docker-compose down --remove-orphans --volumes'
+            script{
+                gv.clean()
+            }
         }
     }
 }
