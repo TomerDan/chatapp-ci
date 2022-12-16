@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        GIT_URL_HTTP = "gitlab/TomDan/analytics.git"
+        GIT_URL_HTTP = "https://github.com/TomerDan/portfolio-project.git"
     }
 
     stages {
