@@ -3,8 +3,16 @@ pipeline {
     environment {
         GIT_URL_HTTP = "github.com/TomerDan/portfolio-project.git"
     }
-//###############################VERSION###############################################3
     stages {
+//###############################INIT###############################################
+        stage ("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
+//#############################VERSION###############################################
         stage('version'){
             when {
                 branch "release/*"
@@ -19,7 +27,6 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                    gv = load "script.groovy"
                     gv.build()
                 }             
             }
