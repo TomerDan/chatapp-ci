@@ -21,7 +21,7 @@ pipeline {
                 echo 'Build....'
                 script{
                     gv = load "script.groovy"
-                    //gv.build()
+                    gv.build()
                 }             
             }
         }
