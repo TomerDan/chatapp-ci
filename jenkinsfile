@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        GIT_URL_HTTP = "gitlab/TomDan/analytics.git"
+    }
+
     stages {
 //################################BUILD###########################################
         stage('Build') {
