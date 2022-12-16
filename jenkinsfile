@@ -3,8 +3,8 @@ pipeline {
     environment {
         GIT_URL_HTTP = "github.com/TomerDan/portfolio-project.git"
     }
-    stages {
 //###############################INIT###############################################
+    stages {
         stage ("init"){
             steps{
                 script{
@@ -13,15 +13,14 @@ pipeline {
             }
         }
 //#############################VERSION###############################################
-        stage('version'){
-            when {
-                branch "release/*"
-            }
+        stage("version") {
+            when { branch "release/*"}
             steps{
                 script{
-                    gv.version()
+                    gv.build()
                 }
             }
+
         }
 //################################BUILD###########################################
         stage('Build') {
