@@ -3,23 +3,31 @@ pipeline {
     environment {
         GIT_URL_HTTP = "github.com/TomerDan/portfolio-project.git"
     }
-
+//###############################VERSION###############################################3
     stages {
+        stage(version){
+            when {
+                branch "release/*"
+            }
+            steps{
+                script{
+                    gv.version()
+                }
+            }
+        }
 //################################BUILD###########################################
         stage('Build') {
             steps {
                 script{
                     gv = load "script.groovy"
-                    gv.version(
-                    gv.build
-                    )
+                    gv.build()
                 }             
             }
         }
 //################################PACKAGE###########################################
         stage('Package') {
             when {
-                branch "main/*"
+                branch "main"
             }
             steps {
                 echo 'Package....'
@@ -31,6 +39,7 @@ pipeline {
                 anyOf {
                     branch "main"
                     branch "release/*"
+                    branch "feature/*"
                 }
             }
             steps {
@@ -43,7 +52,7 @@ pipeline {
 //################################TAG###########################################
         stage('Tag') {
             when {
-                branch "main/*"
+                branch "release/*"
             }
             steps {
                 echo 'Tag....'
@@ -52,7 +61,7 @@ pipeline {
 //################################PUBLISH###########################################
         stage('Publish') {
             when {
-                branch "main/*"
+                branch "release/*"
             }
             steps {
                 echo 'Publish....'
@@ -61,7 +70,7 @@ pipeline {
 //################################DEPLOY###########################################
         stage('Deploy') {
             when {
-                branch "main/*"
+                branch "release/*"
             }
             steps {
                 echo 'Deploy....'
