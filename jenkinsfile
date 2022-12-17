@@ -72,8 +72,9 @@ pipeline {
             steps {
                 echo 'Publish....'
                 script{
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.us-east-1.amazonaws.com'
-                    gv.publish_image()
+                    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_credential') {
+                    app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio","-f ./app/Dockerfile ./app/")
+                    app.push()
                 }
             }
         }
