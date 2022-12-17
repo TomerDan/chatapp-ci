@@ -1,7 +1,7 @@
 def version(){                  
     majorMinor = env.BRANCH_NAME.split("/")[1]  // x.y
-    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "GL_USER", passwordVariable: "GL_PASS"]]) {
-    sh "git fetch https://${GL_USER}:${GL_PASS}@${env.GIT_URL_HTTP} --tags"
+    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
+    sh "git fetch https://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tags"
     }
     previousTag = sh(script: "git describe --tags --abbrev=0 | grep -E '^$majorMinor' || true", returnStdout: true).trim()  // x.y.z or empty string. `grep` is used to prevent returning a tag from another release branch; `true` is used to not fail the pipeline if grep returns nothing.
     if (!previousTag) {
@@ -37,12 +37,17 @@ def tag(){
         sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
         sh "git push http://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tag"
     }}
+    
+def build_for_ecr(){
+    app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio")
+    sh 'mvn verify'
+}
 
-def publish_ecr(){         
-    configFileProvider(
-    [configFile(fileId: '795c8c4a-8d86-4326-90c7-8577ce9849ae', variable: 'MAVEN_SETTINGS')]) {
-    sh 'mvn -s $MAVEN_SETTINGS deploy -DskipTests'
-    }}
+def publish_image(){                  
+    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_card_push_image') {
+    app.push("${env.VERSION}")
+    } 
+
 
 def clean_docker(){
     sh 'docker-compose down --remove-orphans --volumes'

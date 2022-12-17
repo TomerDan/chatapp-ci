@@ -67,10 +67,14 @@ pipeline {
 //################################PUBLISH###########################################
         stage('Publish') {
             when {
-                branch "release/*"
+                branch "main"
             }
             steps {
                 echo 'Publish....'
+                script{
+                    gv.build_for_ecr()
+                    gv.publish_image()
+                }
             }
         }
 //################################DEPLOY###########################################
