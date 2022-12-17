@@ -30,8 +30,66 @@ pipeline {
                 }             
             }
         }
+//################################PACKAGE###########################################
+        stage('Package') {
+            when {
+                branch "main"
+            }
+            steps {
+                echo 'Package....'
+            }
+        }
+//################################TEST###########################################
+        stage('Test') {
+            when {
+                anyOf {
+                    branch "main"
+                    branch "release/*"
+                    branch "feature/*"
+                }
+            }
+            steps {
+                script{
+                    gv.test()
+                }
 
+            }
+        }
+//################################TAG###########################################
+        stage('Tag') {
+            when {
+                branch "release/*"
+            }
+            steps {
+                echo 'Tag....'
+            }
+        }
+//################################PUBLISH###########################################
+        stage('Publish') {
+            when {
+                branch "release/*"
+            }
+            steps {
+                echo 'Publish....'
+            }
+        }
+//################################DEPLOY###########################################
+        stage('Deploy') {
+            when {
+                branch "release/*"
+            }
+            steps {
+                echo 'Deploy....'
+            }
+        }
+//################################CLEAN###########################################
     }
-
+    post{
+        always{
+            script{
+                gv.clean()
+            }
+        }
+    }
 }
 

@@ -48,3 +48,4 @@ def clean_docker(){
     sh 'docker-compose down --remove-orphans --volumes'
 }
 
+return this
