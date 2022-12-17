@@ -44,7 +44,7 @@ def publish_ecr(){
     sh 'mvn -s $MAVEN_SETTINGS deploy -DskipTests'
     }}
 
-def clean(){
+def clean_docker(){
     sh 'docker-compose down --remove-orphans --volumes'
 }
 

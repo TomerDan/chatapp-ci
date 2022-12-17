@@ -28,7 +28,7 @@ pipeline {
     post{
         always{
             script{
-                gv.clean()
+                gv.clean_docker()
             }
         }
     }
