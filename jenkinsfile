@@ -1,7 +1,17 @@
 pipeline {
     agent any
+    environment {
+        GIT_URL_HTTP = "github.com/TomerDan/portfolio-project.git"
+    }
 //###############################INIT###############################################
     stages {
+        stage ("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
 
     }
 
