@@ -12,7 +12,16 @@ pipeline {
                 }
             }
         }
+//#############################VERSION###############################################
+        stage("version") {
+            when { branch "release/*"}
+            steps{
+                script{
+                    gv.build()
+                }
+            }
 
+        }
     }
 
 }
