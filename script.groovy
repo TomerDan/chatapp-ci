@@ -39,8 +39,7 @@ def tag(){
     }}
     
 def build_for_ecr(){
-    app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio")
-    sh 'mvn verify'
+    app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio","-f ./app/Dockerfile ./app/")
 }
 
 def publish_image(){                  
