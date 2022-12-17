@@ -70,10 +70,9 @@ pipeline {
                 branch "main"
             }
             steps {
+                echo 'Publish....'
                 script{
-                    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_card_push_image') {
-                    app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio","-f ./app/Dockerfile ./app/")
-                    app.push()
+                    gv.publish_image()
                 }
             }
         }
