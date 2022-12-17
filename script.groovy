@@ -25,7 +25,7 @@ def build(){
 def test(){
     sh'''
     docker network connect lab_default app
-    curl http://app:8083/
+    curl app:8083
     '''
 }
 
