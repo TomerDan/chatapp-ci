@@ -43,8 +43,8 @@ def build_for_ecr(){
 }
 
 def publish_image(){                  
-    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_card_push_image') {
-    app.push("1.1.1")
+    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'aws_card_push_image') {
+    app.push()
     } }
 
 
