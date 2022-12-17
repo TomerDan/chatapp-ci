@@ -43,7 +43,7 @@ def build_for_ecr(){
 }
 
 def publish_image(){                 
-    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_credential') {
+    docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_protfolio_ecr') {
     app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio","-f ./app/Dockerfile ./app/")
     app.push()
     } }
