@@ -59,11 +59,14 @@ def update_helm_version(){
         sh "git clone https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git"
         sh "git config --global user.email 'daniely.tomer@gmail.com'"
         sh "git config --global user.name 'tomer'"
-        sh "cat chatapp-helm/chatapp/values.yaml"
-        sh "sed -i 's/tag: .*/tag: ${env.VERSION}/g' chatapp-helm/chatapp/values.yaml"
-        sh "cat chatapp-helm/chatapp/values.yaml"
-        sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git HEAD:main"
-        //sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
-        //sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git --tag"
-    }}
+        dir('chatapp-helm') {
+            sh "cat chatapp/values.yaml"
+            sh "sed -i 's/tag: .*/tag: ${env.VERSION}/g' chatapp/values.yaml"
+            sh "cat chatapp/values.yaml"
+            sh "git add ."
+            sh "git commit -m 'push version from jenkins'"
+            sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git HEAD:main"
+            //sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
+            //sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git --tag"
+    }}}
 return this
