@@ -3,7 +3,7 @@ def version(){
     withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
     sh "git fetch https://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tags"
     }
-    majorMinor = sh(script: "git tag -l --sort=v:refname | tail -1", returnStdout: true).trim()
+    majorMinor = sh(script: "git tag -l --sort=v:refname | tail -1 | cut -c 1-3", returnStdout: true).trim()
     previousTag = sh(script: "git describe --tags --abbrev=0 | grep -E '^$majorMinor' || true", returnStdout: true).trim()  // x.y.z or empty string. `grep` is used to prevent returning a tag from another release branch; `true` is used to not fail the pipeline if grep returns nothing.
     if (!previousTag) {
     patch = "0"
