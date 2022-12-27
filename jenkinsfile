@@ -67,6 +67,9 @@ pipeline {
             }
             steps {
                 echo 'Deploy....'
+                script{
+                    gv.update_helm_version()
+                }
             }
         }
 //################################CLEAN###########################################
