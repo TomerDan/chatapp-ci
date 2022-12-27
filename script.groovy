@@ -1,8 +1,9 @@
 def version(){                  
-    majorMinor = env.BRANCH_NAME.split("/")[1]  // x.y
+    
     withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
     sh "git fetch https://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tags"
     }
+    majorMinor = sh(script: "git tag -l --sort=v:refname | tail -1", returnStdout: true).trim()
     previousTag = sh(script: "git describe --tags --abbrev=0 | grep -E '^$majorMinor' || true", returnStdout: true).trim()  // x.y.z or empty string. `grep` is used to prevent returning a tag from another release branch; `true` is used to not fail the pipeline if grep returns nothing.
     if (!previousTag) {
     patch = "0"
@@ -45,7 +46,7 @@ def build_for_ecr(){
 def publish_image(){                 
     docker.withRegistry('https://644435390668.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws_protfolio_ecr') {
     app = docker.build("644435390668.dkr.ecr.us-east-1.amazonaws.com/tomer-protfolio","-f ./app/Dockerfile ./app/")
-    app.push()
+    app.push("${env.VERSION}")
     } }
 
 

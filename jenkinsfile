@@ -12,16 +12,6 @@ pipeline {
                 }
             }
         }
-//#############################VERSION###############################################
-        stage("version") {
-            when { branch "release/*"}
-            steps{
-                script{
-                    gv.version()
-                }
-            }
-
-        }
 //################################BUILD###########################################
         stage('Build') {
             steps {
@@ -30,21 +20,11 @@ pipeline {
                 }             
             }
         }
-//################################PACKAGE###########################################
-        stage('Package') {
-            when {
-                branch "main"
-            }
-            steps {
-                echo 'Package....'
-            }
-        }
 //################################TEST###########################################
         stage('Test') {
             when {
                 anyOf {
                     branch "main"
-                    branch "release/*"
                     branch "feature/*"
                 }
             }
@@ -58,9 +38,13 @@ pipeline {
 //################################TAG###########################################
         stage('Tag') {
             when {
-                branch "release/*"
+                branch "main"
             }
             steps {
+                script{
+                gv.version()
+                gv.tag()
+                }
                 echo 'Tag....'
             }
         }
@@ -79,7 +63,7 @@ pipeline {
 //################################DEPLOY###########################################
         stage('Deploy') {
             when {
-                branch "release/*"
+                branch "main"
             }
             steps {
                 echo 'Deploy....'
