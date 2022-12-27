@@ -54,4 +54,15 @@ def clean_docker(){
     sh 'docker-compose down --remove-orphans --volumes'
 }
 
+def update_helm_version(){
+        withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
+        sh "git clone https://github.com/TomerDan/chatapp-helm.git"
+        sh "git config --global user.email 'daniely.tomer@gmail.com'"
+        sh "git config --global user.name 'tomer'"
+        sh "cat chatapp/values.yaml"
+        sh "sed s/*.*.*/${env.VERSION}/g chatapp/values.yaml"
+        sh "cat chatapp/values.yaml"
+        //sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
+        //sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git --tag"
+    }}
 return this
