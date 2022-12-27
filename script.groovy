@@ -62,7 +62,7 @@ def update_helm_version(){
         sh "cat chatapp-helm/chatapp/values.yaml"
         sh "sed -i 's/tag: .*/tag: ${env.VERSION}/g' chatapp-helm/chatapp/values.yaml"
         sh "cat chatapp-helm/chatapp/values.yaml"
-        sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git "
+        sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git HEAD:main"
         //sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
         //sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git --tag"
     }}
