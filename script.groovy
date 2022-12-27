@@ -36,7 +36,7 @@ def tag(){
         sh "git config --global user.name 'tomer'"
         sh "git clean -f -x"
         sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
-        sh "git push http://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tag"
+        sh "git push https://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} main --tags"
     }}
     
 def build_for_ecr(){
