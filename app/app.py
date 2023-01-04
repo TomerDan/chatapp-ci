@@ -1,18 +1,18 @@
 from datetime import datetime
 from flask import Flask, request, render_template
 import mysql.connector
-
+import os
 
 app = Flask(__name__,template_folder='templat')
 
 #DB
 mass=[]
 mydb = mysql.connector.connect(
-  host="mysql",
+  host=os.environ['MYSQL_HOST'],
   port= "3306",
-  user="root",
-  password="root",
-  database="mydb"
+  user=os.environ['MYSQL_USER'],
+  password=os.environ['MYSQL_PASSWORD'],
+  database=os.environ['MYSQL_DATABASE']
 )
 mycursor = mydb.cursor()
 
