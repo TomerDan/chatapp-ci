@@ -8,7 +8,7 @@ app = Flask(__name__,template_folder='templat')
 #DB
 mass=[]
 mydb = mysql.connector.connect(
-  host="db",
+  host="mysql",
   port= "3306",
   user="root",
   password="root",
