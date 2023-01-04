@@ -6,14 +6,14 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
     restart: always
     networks:
       - lab_default
 
 
-  db:
+  mysql:
     image: mysql:latest
     restart: always
     environment:
