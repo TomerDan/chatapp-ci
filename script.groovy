@@ -19,7 +19,7 @@ def build(){
     sh'''
     docker system prune -a --volumes -f
     docker build ./app/ -f ./app/Dockerfile -t app
-    docker-compose up -d
+    docker compose up -d
     '''  
 }
 
