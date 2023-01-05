@@ -1,6 +1,6 @@
 def version(){                  
     
-    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
+    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
     sh "git fetch https://${G_USER}:${G_PASS}@${env.GIT_URL_HTTP} --tags"
     }
     majorMinor = sh(script: "git tag -l --sort=v:refname | tail -1 | cut -c 1-3", returnStdout: true).trim()
@@ -31,7 +31,7 @@ def test(){
 }
 
 def tag(){                    
-    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
+    withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
         sh "git config --global user.email 'daniely.tomer@gmail.com'"
         sh "git config --global user.name 'tomer'"
         sh "git clean -f -x"
@@ -55,7 +55,7 @@ def clean_docker(){
 }
 
 def update_helm_version(){
-        withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github-protfolio", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
+        withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "github", usernameVariable: "G_USER", passwordVariable: "G_PASS"]]) {
         sh "git clone https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git"
         sh "git config --global user.email 'daniely.tomer@gmail.com'"
         sh "git config --global user.name 'tomer'"
@@ -66,7 +66,5 @@ def update_helm_version(){
             sh "git add ."
             sh "git commit -m 'push version from jenkins'"
             sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git HEAD:main"
-            //sh "git tag -a ${env.VERSION} -m 'version ${env.VERSION}'"
-            //sh "git push https://${G_USER}:${G_PASS}@github.com/TomerDan/chatapp-helm.git --tag"
     }}}
 return this
